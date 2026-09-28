@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # API REST em Flask com persistência SQLite
+  silictrace-api:
+    build:
+      context: ../silictrace-back
+      dockerfile: Dockerfile
+    container_name: silictrace-container
+    ports:
+      - "5000:5000"
+    volumes:
+      # Mapeia o banco local para manter os dados salvos entre reinicializações
+      - ../silictrace-back/database:/app/database
+    restart: unless-stopped
+    networks:
+      - silictrace-net
+
+  # Aplicação React compilada e servida via Nginx
+  silictrace-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: silictrace-front-container
+    ports:
+      - "80:80"
+    depends_on:
+      # Aguarda a inicialização da API antes de subir o front
+      - silictrace-api
+    restart: unless-stopped
+    networks:
+      - silictrace-net
+
+# Rede bridge para comunicação entre os contêineres
+networks:
+  silictrace-net:
+    driver: bridge

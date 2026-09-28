@@ -1,0 +1,27 @@
+# Dependências locais (o contêiner executa o próprio npm install)
+node_modules
+
+# Builds locais anteriores
+dist
+dist-ssr
+
+# Arquivos e logs de runtime
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Controle de versão e metadados
+.git
+.gitignore
+
+# Configurações de IDE e sistema
+.vscode
+.idea
+.DS_Store
+
+# Variáveis de ambiente locais
+.env
+.env.local
+.env.*.local
